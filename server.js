@@ -2,8 +2,16 @@ const express = require('express');
 const colors = require('colors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const connectDB = require('./config/db');
 
+// dotenv config 
 dotenv.config();
+
+// mongodb connection 
+connectDB();
+
+
+
 
 // rest object 
 const app = express();
@@ -24,5 +32,7 @@ const port = process.env.PORT || 5000;
 
 // listen on port 5000
 app.listen(port, () => {
-    console.log(`server running in${process.env.NODE_MODE} on port ${process.env.PORT}`)
+    console.log(
+      `server running in ${process.env.DEV_MODE} on port ${process.env.PORT}`
+    );
 })
