@@ -56,7 +56,31 @@ const loginController = async (req, res) => {
   }
 };
 
-module.exports = { loginController };
 
 
-module.exports = { registerController, loginController };
+const authController = async(req, res) => {
+  try {
+    const user = await userModel.findOneAndDelete({_id:req.body.userId})
+    if (!user) {
+      return res.status(200).send({
+        message: "user not founed",
+        success: false,
+      })
+    } else {
+      res.status(200).send({
+        success: true,
+        data: user.name,
+        email: user.email,
+      })
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({
+      message: "authentication failed",
+      success: false,
+    })
+    
+  }
+}
+
+module.exports = { registerController, loginController, authController };
